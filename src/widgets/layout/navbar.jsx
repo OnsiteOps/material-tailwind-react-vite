@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import {
   Navbar as MTNavbar,
   MobileNav,
+  Collapse,
   Typography,
   Button,
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import cn from "classnames";
 
 export function Navbar({ brandName, routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
@@ -27,7 +29,7 @@ export function Navbar({ brandName, routes, action }) {
           key={name}
           as="li"
           variant="small"
-          color="inherit"
+          color="black"
           className="capitalize"
         >
           {href ? (
@@ -61,27 +63,19 @@ export function Navbar({ brandName, routes, action }) {
   );
 
   return (
-    <MTNavbar color="transparent" className="p-3">
-      <div className="container mx-auto flex items-center justify-between text-white">
+    <MTNavbar color="transparent" className="p-3 px-6 shadow-md absolute z-10 h-auto w-full max-w-full rounded-none bg-white">
+      <div className="flex items-center justify-between text-black w-full">
         <Link to="/">
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">
             {brandName}
           </Typography>
         </Link>
         <div className="hidden lg:block">{navList}</div>
-        <div className="hidden gap-2 lg:flex">
-          <a
-            href="https://www.material-tailwind.com/blocks?ref=mtkr"
-            target="_blank"
-          >
-            <Button variant="text" size="sm" color="white" fullWidth>
-              pro version
-            </Button>
-          </a>
+        {/* <div className="hidden gap-2 lg:flex">
           {React.cloneElement(action, {
             className: "hidden lg:inline-block",
           })}
-        </div>
+        </div> */}
         <IconButton
           variant="text"
           size="sm"
@@ -96,26 +90,30 @@ export function Navbar({ brandName, routes, action }) {
           )}
         </IconButton>
       </div>
-      <MobileNav
-        className="rounded-xl bg-white px-4 pt-2 pb-4 text-blue-gray-900"
+      <Collapse
+        // className="rounded-xl bg-red-300 px-4 pt-2 pb-4 h-0 text-blue-gray-900 opacity-100-important"
+        className={cn(
+          "rounded-xl bg-white px-0 pt-3 pb-3 h-auto text-blue-gray-900 w-full",
+          !openNav && "h-0 opacity-0 px-0 pt-0 pb-0",
+        )}
         open={openNav}
       >
-        <div className="container mx-auto">
+        {/* <div className="container mx-auto">
           {navList}
           <a
             href="https://www.material-tailwind.com/blocks/react?ref=mtkr"
             target="_blank"
-            className="mb-2 block"
+            className="mb-2 block text-black"
           >
-            <Button variant="text" size="sm" fullWidth>
+            <Button variant="text" size="sm" className="text-black" fullWidth>
               pro version
             </Button>
           </a>
           {React.cloneElement(action, {
             className: "w-full block",
           })}
-        </div>
-      </MobileNav>
+        </div> */}
+      </Collapse>
     </MTNavbar>
   );
 }
